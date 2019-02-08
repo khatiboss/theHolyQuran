@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>The Holy Quran</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <meta name="author" content="Salah-eddine Khatib" />
+
+        <!-- Styles -->
+        <link rel="stylesheet" href="css/bootstrap.min.css" />
+        <link rel="stylesheet" href="css/fontawesome-all.min.css" />
+        <style>
+            * {
+                font-family: Georgia, "Times New Roman", Times, serif;
+            }
+            body {
+                /* background-image: url("img/bg.jpg") !important;*/
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                background-position: center;
+            }
+            #reciter {
+                font-size: 30px;
+            }
+            #title {
+                text-align: center;
+                font-size: 60px;
+                color: gold;
+                margin-bottom: 50px;
+                font-family: "Trebuchet MS", "Lucida Sans Unicode",
+                    "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+            }
+            #audioplayer {
+                height: 80px;
+                border-style: none;
+            }
+        </style>
+    </head>
+
+    <body class="container mt-5 mb-3">
+        <h1 id="title">The Holy Quran</h1>
+
+        <div class="row">
+            <div class="offset-md-3 col-md-6 mt-3">
+                <select
+                    class="form-control"
+                    data-bind="
+                            options:recitersList,
+                            optionsCaption:'Choose a Reciter',
+                            optionsText:'name',
+                            optionsValue:'id',
+                            value:selectedReciter,event:{change:changeReciter}
+                            "
+                >
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="offset-md-3 col-md-6 mb-5 text-center">
+                <p>
+                    <span
+                        id="audioplayer"
+                        data-bind="text: selectedName"
+                    ></span>
+                </p>
+                <audio
+                    class="form-control"
+                    id="audioplayer"
+                    controls="controls"
+                    autoplay="autoplay"
+                    data-bind="attr:{src: selectedFile}"
+                ></audio>
+            </div>
+        </div>
+        <div class="row">
+            <div class="text-center">
+                <span id="reciter" data-bind="text:availableReciterName"></span>
+                {<little
+                    data-bind="text:availableRewaya,css:'text-success'"
+                ></little
+                >}
+            </div>
+        </div>
+        <table class="table table-striped text-center mb-3 mt-1">
+            <thead>
+                <tr>
+                    <th>Sura N°</th>
+                    <th>Sura Name</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: availableSurasName">
+                <tr>
+                    <td data-bind="text:id "></td>
+                    <td data-bind="text: name"></td>
+                    <td>
+                        <a
+                            href="#"
+                            data-bind="click: $root.playSura"
+                            title="Listen"
+                            class="text-info"
+                            ><i class="fa fa-play"></i> Listen</a
+                        >
+                        <br />
+                        <a
+                            id="downloadFile"
+                            href="#"
+                            data-bind="click:$root.downloadSura"
+                            title="Download"
+                            class="text-success"
+                            download
+                            ><i class="fa fa-download"></i> Download</a
+                        >
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- Scripts -->
+        <script src="js/jquery-3.0.0.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/knockout-3.4.2.js"></script>
+        <script src="js/knockout-3.4.2.debug.js"></script>
+        <script src="js/SurasName.js"></script>
+        <script src="js/quranViewModel.js"></script>
+
+        <script type="text/javascript">
+            var vm = new PlaylistViewModel();
+            vm.init();
+            ko.applyBindings(vm);
+
+            $(document).ready(function() {});
+        </script>
+    </body>
+</html>
